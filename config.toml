@@ -1,0 +1,23 @@
+[gwrite]
+default_profile = "fabian"
+
+[gwrite.fabian]
+document_start = """;Generated with vpypy gwrite.fabian
+G90          ; set all axes to absolute positioning
+G92 X0 Y0 Z0 ; set current pos to value specified
+G00 X0 Y0 Z5 ; pick pen up 5mm
+
+"""
+layer_join = ";New layer: layer={layer_index}\n\n"
+segment_first = """;Begin line layer={layer_index} lines_idx={lines_index}
+G00 X{x:.4f} Y{y:.4f} Z5 F2100 ; pen is up, move pen to start of line segment at 2100 mm/min
+G01 X{x:.4f} Y{y:.4f} Z0 F210    ; lower pen slowly
+"""
+segment = "G01 X{x:.4f} Y{y:.4f} Z0 F650  ; pen is down, draw line segment, use F720 for non-gelpen\n" 
+line_end = "G00 X{x:.4f} Y{y:.4f} Z5 F500 ; lift up pen\n\n"
+document_end = """; pen is up, move back to origin\n
+G00 X0 Y0 Z5 F2100 ; move x & y to the origin
+G00 X0 Y0 Z10 F500 ; lift pen up higher
+"""
+unit = "mm"
+invert_y = true
